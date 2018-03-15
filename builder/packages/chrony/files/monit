@@ -1,0 +1,5 @@
+check process chrony
+  with pidfile "/var/run/chrony.pid"
+  start program = "/etc/init.d/chronyd start"
+  stop program = "/etc/init.d/chronyd stop"
+  if 3 restarts within 3 cycles then alert
