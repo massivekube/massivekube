@@ -1,6 +1,0 @@
-/var/log/monit.log {
-    copytruncate
-    missingok
-    notifempty
-    size 100k
-}
