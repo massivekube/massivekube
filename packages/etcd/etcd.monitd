@@ -1,0 +1,5 @@
+check process etcd
+  with pidfile "/var/run/etcd.pid"
+  start program = "/etc/init.d/etcd start"
+  stop program = "/etc/init.d/etcd stop"
+  if 3 restarts within 3 cycles then alert

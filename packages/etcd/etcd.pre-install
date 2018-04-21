@@ -1,0 +1,12 @@
+#!/bin/sh
+
+USER=etcd
+GROUP=etcd
+
+addgroup -S $GROUP 2>/dev/null
+adduser -S -D -H -s /sbin/nologin -G $GROUP -g $USER $USER 2>/dev/null
+
+mkdir -p /var/lib/etcd
+chown $USER:$GROUP /var/lib/etcd
+
+exit 0

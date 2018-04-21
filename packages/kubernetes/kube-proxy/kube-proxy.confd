@@ -1,0 +1,5 @@
+
+LOG_LEVEL=2
+PROXY_MODE=iptables
+CLUSTER_CIDR=10.200.0.0/16
+KUBECONFIG=/var/lib/kube-proxy/kubeconfig

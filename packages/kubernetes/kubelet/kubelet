@@ -1,0 +1,6 @@
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+clusterDns: 10.32.0.10
+clusterName: cluster.local
+evictionHard:
+    memory.available:  "200Mi"

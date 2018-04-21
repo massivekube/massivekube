@@ -1,2 +1,3 @@
-output-*
+output
 packer_cache
+src

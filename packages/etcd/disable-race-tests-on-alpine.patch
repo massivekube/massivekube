@@ -1,0 +1,14 @@
+diff --git a/test b/test
+index 08be1b2..80f676f 100755
+--- a/test
++++ b/test
+@@ -77,7 +77,8 @@ fi
+
+ # determine whether target supports race detection
+ if [ "$GOARCH" == "amd64" ]; then
+-	RACE="--race"
++	# NOTE: Not supported on alpine
++	echo "Race detection disabled on alpine"
+ fi
+
+ function unit_pass {

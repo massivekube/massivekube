@@ -1,0 +1,9 @@
+#!/bin/sh
+
+USER=node_exporter
+GROUP=prometheus
+
+addgroup -g 30005 -S $GROUP 2>/dev/null
+adduser -u 20005 -S -D -H -s /sbin/nologin -G $GROUP -g $USER $USER 2>/dev/null
+
+exit 0

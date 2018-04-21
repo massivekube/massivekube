@@ -1,0 +1,5 @@
+check process node_exporter
+  with pidfile "/var/run/node_exporter.pid"
+  start program = "/etc/init.d/node_exporter start"
+  stop program = "/etc/init.d/node_exporter stop"
+  if 3 restarts within 3 cycles then alert

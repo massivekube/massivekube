@@ -1,0 +1,76 @@
+# Maintainer: Dan Williams <dan@ma.ssive.co>
+pkgname=kubernetes
+pkgver=1.10.1
+pkgrel=0
+pkgdesc="Production-Grade Container Scheduling and Management"
+url="https://github.com/kubernetes/kubernetes"
+arch="all"
+license="Apache-2.0"
+makedepends="go bash grep findutils rsync linux-headers"
+source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz"
+builddir="$srcdir/src/github.com/kubernetes/kubernetes"
+subpackages="$pkgname-kubelet $pkgname-kubectl $pkgname-kubeproxy"
+
+export GOPATH="$srcdir"
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/kubernetes-$pkgver "$builddir"/
+	default_prepare
+}
+
+build() {
+	cd "$builddir"
+	make -j1 WHAT="cmd/kubelet cmd/kube-proxy cmd/kube-apiserver cmd/kube-controller-manager plugin/cmd/kube-scheduler cmd/kubectl"
+}
+
+# check() {
+# 	cd "$builddir"
+# 	make test
+# }
+
+kubelet() {
+	local binpath="$builddir/_output/local/bin/linux/amd64"
+	local configpath="$srcdir/../kubelet"
+
+	depends="socat"
+	install="$srcdir/kubelet/install"
+
+	# Binaries
+	install -Dm755 "$binpath"/kubelet "$subpkgdir"/usr/bin/kubelet
+
+	# Config
+	install -Dm600 "$configpath"/kubelet.initd "$subpkgdir"/etc/init.d/kubelet
+	install -Dm600 "$configpath"/kubelet.confd "$subpkgdir"/etc/conf.d/kubelet
+	install -Dm600 "$configpath"/kubelet.monitd "$subpkgdir"/etc/monit.d/kubelet.conf
+}
+
+
+kubeproxy() {
+	local binpath="$builddir/_output/local/bin/linux/amd64"
+	local configpath="$srcdir/../kube-proxy"
+
+	pkgname="kubernetes-kube-proxy"
+
+	install="$srcdir/kube-proxy/install"
+
+	# Binaries
+	install -Dm755 "$binpath"/kube-proxy "$subpkgdir"/usr/bin/kube-proxy
+
+	# Config
+	install -Dm600 "$configpath"/kube-proxy.initd "$subpkgdir"/etc/init.d/kube-proxy
+	install -Dm600 "$configpath"/kube-proxy.confd "$subpkgdir"/etc/conf.d/kube-proxy
+	install -Dm600 "$configpath"/kube-proxy.monitd "$subpkgdir"/etc/monit.d/kube-proxy.conf
+}
+
+kubectl() {
+	local binpath="$builddir/_output/local/bin/linux/amd64"
+
+	install -Dm755 "$binpath"/kubectl "$subpkgdir"/usr/bin/kubectl
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+sha512sums="be53fb6265fa5a96de671c3d84baddcbb2213428eae5ca39ac670201f0f4fe89195bdebc1a2d1abf2ad8ad100aca7ee642672c233bcacc427671e01dc95c9f1c  kubernetes-1.10.1.tar.gz"

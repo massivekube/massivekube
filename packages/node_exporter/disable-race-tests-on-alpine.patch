@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index ab51e3e..82fcade 100644
+--- a/Makefile
++++ b/Makefile
+@@ -29,7 +29,7 @@ DOCKERFILE              ?= Dockerfile
+
+ ifeq ($(GOHOSTARCH),amd64)
+ 	# Only supported on amd64
+-	test-flags := -race
++	#test-flags := -race
+ endif
+
+ ifeq ($(OS),Windows_NT)

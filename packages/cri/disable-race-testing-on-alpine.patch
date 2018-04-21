@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 6559bc1..5e0c208 100644
+--- a/Makefile
++++ b/Makefile
+@@ -106,7 +106,7 @@ $(BUILD_DIR)/containerd: $(SOURCES) $(PLUGIN_SOURCES)
+ 		$(PROJECT)/cmd/containerd
+
+ test:
+-	$(GO) test -timeout=10m -race ./pkg/... \
++	$(GO) test -timeout=10m ./pkg/... \
+ 		-tags '$(BUILD_TAGS)' \
+ 	        -ldflags '$(GO_LDFLAGS)' \
+ 		-gcflags '$(GO_GCFLAGS)'
