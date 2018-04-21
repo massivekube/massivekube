@@ -1,0 +1,17 @@
+#
+# Alpine linux :: answer file for setup-alpine
+#
+
+KEYMAPOPTS="us us"
+HOSTNAMEOPTS="-n packer"
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+"
+TIMEZONEOPTS="-z UTC"
+PROXYOPTS="none"
+APKREPOSOPTS="https://mirror.csclub.uwaterloo.ca/alpine/v3.7/main"
+SSHDOPTS="-c openssh"
+NTPOPTS="-c chrony"
+DISKOPTS="-m sys /dev/sda"

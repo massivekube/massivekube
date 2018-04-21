@@ -1,0 +1,39 @@
+{
+  "variables": {
+    "provision_script": "/tmp/provision.sh",
+    "root_password": "changeme"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "output_directory": "../../output/machine-images/kubernetes",
+      "vm_name": "kubernetes",
+      "guest_additions_mode": "disable",
+      "source_path": "../../output/machine-images/alpine/alpine.ovf",
+      "ssh_username": "packer",
+      "headless": "false",
+      "ssh_password": "{{user `root_password`}}",
+      "ssh_pty": "true",
+      "shutdown_command": "echo '{{user `root_password`}}' | su -c poweroff"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./provision.sh",
+      "destination": "{{user `provision_script`}}"
+    },
+    {
+      "type": "file",
+      "source": "../output/packages",
+      "destination": "/tmp/packages"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "{{user `provision_script`}}"
+      ],
+      "execute_command": "echo '{{user `root_password`}}' | su -c '{{ .Vars }} {{ .Path }}'"
+    }
+  ]
+}

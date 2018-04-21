@@ -1,0 +1,65 @@
+{
+  "variables": {
+    "alpine_iso": "http://dl-cdn.alpinelinux.org/alpine/v3.7/releases/x86_64/alpine-virt-3.7.0-x86_64.iso",
+    "alpine_iso_checksum": "5a4b2588afd32e7024dd61d9558b77b03a4f3189cb4c9fc05e9e944fb780acdd",
+    "provision_script": "/tmp/provision.sh",
+    "root_password": "changeme"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "alpine",
+      "output_directory": "../../output/machine-images/alpine",
+      "guest_additions_mode": "disable",
+      "http_directory": ".",
+      "boot_command": [
+        "root<enter><wait>",
+        "ifconfig eth0 up && udhcpc -i eth0<enter><wait5>",
+        "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
+        "setup-alpine -f ./answers<enter><wait10>",
+        "{{user `root_password`}}<enter><wait>",
+        "{{user `root_password`}}<enter><wait10><wait10>",
+        "y<enter>",
+        "<wait10><wait10>",
+        "mount /dev/sda3 /mnt<enter>",
+        "chroot /mnt<enter>",
+        "adduser packer<enter><wait>",
+        "{{user `root_password`}}<enter>",
+        "{{user `root_password`}}<enter><wait>",
+        "exit<enter>",
+        "reboot<enter>"
+      ],
+      "boot_wait": "30s",
+      "guest_os_type": "Linux26_64",
+      "headless": false,
+      "iso_urls": [
+        "{{user `alpine_iso`}}"
+      ],
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "{{user `alpine_iso_checksum`}}",
+      "ssh_username": "packer",
+      "ssh_password": "{{user `root_password`}}",
+      "ssh_wait_timeout": "5m",
+      "shutdown_command": "echo '{{user `root_password`}}' | su -c poweroff"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./provision.sh",
+      "destination": "{{user `provision_script`}}"
+    },
+    {
+      "type": "file",
+      "source": "../../output/packages",
+      "destination": "/tmp/packages"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "{{user `provision_script`}}"
+      ],
+      "execute_command": "echo '{{user `root_password`}}' | su -c '{{ .Vars }} {{ .Path }}'"
+    }
+  ]
+}
