@@ -1,0 +1,37 @@
+# Maintainer: Dan Williams <dan@ma.ssive.co>
+pkgname=kube-bench
+pkgver=0.0.14
+pkgrel=0
+pkgdesc="Checks whether Kubernetes is deployed according to security best practices"
+url="https://github.com/aquasecurity/kube-bench"
+arch="all"
+license="Apache-2.0"
+makedepends="go glide"
+source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz"
+builddir="$srcdir/src/github.com/aquasecurity/kube-bench"
+
+export GOPATH="$srcdir"
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/$pkgname-${pkgver} "$builddir"/
+
+	default_prepare
+}
+
+build() {
+	cd "$builddir"
+	glide up
+	make kube-bench
+}
+
+# check() {
+# 	cd "$builddir"
+# 	make test
+# }
+
+package() {
+	install -Dm755 "$builddir"/kube-bench "$pkgdir"/usr/bin/kube-bench
+}
+
+sha512sums="d07cc3759e8d11908791df983434607a798b3f77e8520ca03445528fab19025aee2f80c6e2386a73090caf37e7f7fb1e9c47a6a585023c7b5f80b4dceeb12332  kube-bench-0.0.14.tar.gz"
