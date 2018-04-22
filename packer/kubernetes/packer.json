@@ -25,7 +25,7 @@
     },
     {
       "type": "file",
-      "source": "../output/packages",
+      "source": "../../output/packages",
       "destination": "/tmp/packages"
     },
     {
