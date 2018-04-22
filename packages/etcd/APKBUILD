@@ -13,6 +13,7 @@ source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz
 	etcd.monitd
 	etcd.confd"
 builddir="$srcdir/src/github.com/coreos/etcd"
+install="$pkgname.pre-install $pkgname.post-install"
 
 export GOPATH="$srcdir"
 
@@ -37,7 +38,7 @@ package() {
 	install -Dm755 "$builddir"/bin/etcdctl "$pkgdir"/usr/bin/etcdctl
 
 	install -Dm600 "$srcdir"/etcd.confd "$pkgdir"/etc/conf.d/$pkgname
-	install -Dm600 "$srcdir"/etcd.initd "$pkgdir"/etc/init.d/$pkgname
+	install -Dm755 "$srcdir"/etcd.initd "$pkgdir"/etc/init.d/$pkgname
 	install -Dm600 "$srcdir"/etcd.monitd "$pkgdir"/etc/monit.d/$pkgname.conf
 }
 
