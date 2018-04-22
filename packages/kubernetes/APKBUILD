@@ -9,7 +9,7 @@ license="Apache-2.0"
 makedepends="go bash grep findutils rsync linux-headers"
 source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz"
 builddir="$srcdir/src/github.com/kubernetes/kubernetes"
-subpackages="$pkgname-kubelet $pkgname-kubectl $pkgname-kubeproxy $pkgname-kube-apiserver"
+subpackages="$pkgname-kubelet $pkgname-kubectl $pkgname-kubeproxy $pkgname-kube_apiserver"
 
 export GOPATH="$srcdir"
 
@@ -29,7 +29,7 @@ build() {
 # 	make test
 # }
 
-kube-apiserver() {
+kube_apiserver() {
 	local binpath="$builddir/_output/local/bin/linux/amd64"
 	local configpath="$srcdir/../kube-apiserver"
 
