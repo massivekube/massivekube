@@ -1,0 +1,5 @@
+check process kube-apiserver
+  with pidfile "/var/run/kube-apiserver.pid"
+  start program = "/etc/init.d/kube-apiserver start"
+  stop program = "/etc/init.d/kube-apiserver stop"
+  if 3 restarts within 3 cycles then alert

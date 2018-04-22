@@ -1,0 +1,10 @@
+
+LOG_LEVEL=1
+
+APISERVER_COUNT=3
+AUTHORIZATION_MODE=Node,RBAC
+
+ETCD_SERVERS=https://127.0.0.1:2379
+ETCD_CA=/var/lib/kubernetes/ca.pem
+ETCD_CERT=/var/lib/kubernetes/kubernetes.pem
+ETCD_KEY=/var/lib/kubernetes/kubernetes-key.pem
