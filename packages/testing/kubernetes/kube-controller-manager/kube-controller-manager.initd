@@ -1,0 +1,42 @@
+#!/sbin/openrc-run
+
+NAME=kube-controller-manager
+DAEMON=/usr/bin/$NAME
+
+OPTS="
+  --address=0.0.0.0 \\
+  --cluster-cidr=10.200.0.0/16 \\
+  --cluster-name=kubernetes \\
+  --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \\
+  --cluster-signing-key-file=/var/lib/kubernetes/ca-key.pem \\
+  --leader-elect=true \\
+  --master=http://127.0.0.1:8080 \\
+  --root-ca-file=/var/lib/kubernetes/ca.pem \\
+  --service-account-private-key-file=/var/lib/kubernetes/ca-key.pem \\
+  --service-cluster-ip-range=10.32.0.0/24 \\
+  --v=${LOG_LEVEL}"
+
+depend() {
+        need net
+        after firewall
+}
+
+start() {
+        ebegin "Starting ${NAME}"
+                start-stop-daemon --start \
+                        --background \
+                        --make-pidfile --pidfile /var/run/$NAME.pid \
+                        --stderr "/var/log/$NAME.log" \
+                        --stdout "/var/log/$NAME.log" \
+                        --exec $DAEMON \
+                        -- $OPTS
+        eend $?
+}
+
+stop () {
+        ebegin "Stopping ${NAME}"
+                start-stop-daemon --stop \
+                        --pidfile /var/run/$NAME.pid \
+                        --exec $DAEMON
+        eend $?
+}

@@ -28,20 +28,20 @@ build() {
 # 	cd "$builddir"
 # 	make test
 # }
-kube-controller-manager () {
+kube-controllermanager () {
 {
 	local binpath="$builddir/_output/local/bin/linux/amd64"
-	local configpath="$srcdir/../kube-apiserver"
+	local configpath="$srcdir/../kube-controller-manager"
 
-	install="$srcdir/kube-apiserver/install"
+	install="$srcdir/kube-controller-manager/install"
 
 	# Binaries
-	install -Dm755 "$binpath"/kube-apiserver "$subpkgdir"/usr/bin/kube-apiserver
+	install -Dm755 "$binpath"/kube-controller-manager "$subpkgdir"/usr/bin/kube-controller-manager
 
 	# Config
-	install -Dm600 "$configpath"/kube-apiserver.initd "$subpkgdir"/etc/init.d/kube-apiserver
-	install -Dm600 "$configpath"/kube-apiserver.confd "$subpkgdir"/etc/conf.d/kube-apiserver
-	install -Dm600 "$configpath"/kube-apiserver.monitd "$subpkgdir"/etc/monit.d/kube-apiserver.conf
+	install -Dm600 "$configpath"/kube-controller-manager.initd "$subpkgdir"/etc/init.d/kube-controller-manager
+	install -Dm600 "$configpath"/kube-controller-manager.confd "$subpkgdir"/etc/conf.d/kube-controller-manager
+	install -Dm600 "$configpath"/kube-controller-manager.monitd "$subpkgdir"/etc/monit.d/kube-controller-manager.conf
 }
 
 kube_apiserver() {

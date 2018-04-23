@@ -1,0 +1,5 @@
+check process kube-controller-manager
+  with pidfile "/var/run/kube-controller-manager.pid"
+  start program = "/etc/init.d/kube-controller-manager start"
+  stop program = "/etc/init.d/kube-controller-manager stop"
+  if 3 restarts within 3 cycles then alert
