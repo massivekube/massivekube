@@ -45,6 +45,20 @@ kube_apiserver() {
 }
 
 
+kube_scheduler() {
+	local binpath="$builddir/_output/local/bin/linux/amd64"
+	local configpath="$srcdir/../kube-scheduler"
+
+	# Binary
+	install -Dm755 "$binpath"/kube-scheduler "$subpkgdir"/usr/bin/kube-scheduler
+
+	# Config
+	install -Dm600 "$configpath"/kube-scheduler.initd "$subpkgdir"/etc/init.d/kube-scheduler
+	install -Dm600 "$configpath"/kube-scheduler.confd "$subpkgdir"/etc/conf.d/kube-scheduler
+	install -Dm600 "$configpath"/kube-scheduler.monitd "$subpkgdir"/etc/monit.d/kube-scheduler.conf
+}
+
+
 kubelet() {
 	local binpath="$builddir/_output/local/bin/linux/amd64"
 	local configpath="$srcdir/../kubelet"
