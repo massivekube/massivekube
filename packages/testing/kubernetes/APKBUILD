@@ -9,7 +9,7 @@ license="Apache-2.0"
 makedepends="go bash grep findutils rsync linux-headers"
 source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz"
 builddir="$srcdir/src/github.com/kubernetes/kubernetes"
-subpackages="$pkgname-kubelet $pkgname-kubectl $pkgname-kubeproxy $pkgname-kube_apiserver"
+subpackages="$pkgname-kubelet $pkgname-kubectl $pkgname-kubeproxy $pkgname-kube_apiserver kube_scheduler"
 
 export GOPATH="$srcdir"
 
@@ -28,6 +28,21 @@ build() {
 # 	cd "$builddir"
 # 	make test
 # }
+kube-controller-manager () {
+{
+	local binpath="$builddir/_output/local/bin/linux/amd64"
+	local configpath="$srcdir/../kube-apiserver"
+
+	install="$srcdir/kube-apiserver/install"
+
+	# Binaries
+	install -Dm755 "$binpath"/kube-apiserver "$subpkgdir"/usr/bin/kube-apiserver
+
+	# Config
+	install -Dm600 "$configpath"/kube-apiserver.initd "$subpkgdir"/etc/init.d/kube-apiserver
+	install -Dm600 "$configpath"/kube-apiserver.confd "$subpkgdir"/etc/conf.d/kube-apiserver
+	install -Dm600 "$configpath"/kube-apiserver.monitd "$subpkgdir"/etc/monit.d/kube-apiserver.conf
+}
 
 kube_apiserver() {
 	local binpath="$builddir/_output/local/bin/linux/amd64"

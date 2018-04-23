@@ -35,5 +35,11 @@
       ],
       "execute_command": "echo '{{user `root_password`}}' | su -c '{{ .Vars }} {{ .Path }}'"
     }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true
+    }
   ]
 }

@@ -1,11 +1,17 @@
-export REPODEST=/tmp/packages
+STABLE_PACKAGES=$(wildcard stable/*)
+TESTING_PACKAGES := $(wildcard testing/*)
 
-PACKAGES := $(wildcard */.)
+testing: $(TESTING_PACKAGES)
 
-$(PACKAGES):
-	cd $@ && abuild -r
+stable: $(STABLE_PACKAGES)
 
-all: $(PACKAGES)
+$(STABLE_PACKAGES):
+	cd $@ && REPODEST=/tmp/packages/stable abuild -r
+
+$(TESTING_PACKAGES):
+	cd $@ &&  REPODEST=/tmp/packages/testing abuild -r
+
+all: $(STABLE_PACKAGES) $(TESTING_PACKAGES)
 
 docker:
 	@docker run --rm -it -v $(shell pwd):/packages -v $(shell pwd)/../output:/tmp/packages --entrypoint=sh -u alpine massiveco/docker-alpine-sdk -c 'cd /packages && ls && make all'
@@ -13,4 +19,4 @@ docker:
 shell:
 	docker run --rm -it -v $(shell pwd):/packages -v $(shell pwd)/../output:/home/alpine/packages -u alpine massiveco/docker-alpine-sdk
 
-.PHONY: all $(PACKAGES)
+.PHONY: all $(TESTING_PACKAGES) $(STABLE_PACKAGES)
