@@ -30,7 +30,6 @@ build() {
 # }
 
 kube_controllermanager () {
-{
 	local binpath="$builddir/_output/local/bin/linux/amd64"
 	local configpath="$srcdir/../kube-controller-manager"
 
