@@ -3,7 +3,7 @@ export REPODEST=/tmp/packages
 PACKAGES := $(wildcard */.)
 
 $(PACKAGES):
-	cd $@ && abuild checksum && abuild -r
+	cd $@ && abuild -r
 
 all: $(PACKAGES)
 
