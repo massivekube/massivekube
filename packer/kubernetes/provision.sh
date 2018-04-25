@@ -1,3 +1,3 @@
 #!/bin/sh
 
-apk add --allow-untrusted /tmp/packages/x86_64/*.apk
+apk add --allow-untrusted /tmp/packages/testing/x86_64/*.apk

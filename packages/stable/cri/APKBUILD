@@ -1,13 +1,13 @@
 # Maintainer: Dan Williams <dan@ma.ssive.co>
 pkgname=cri
-pkgver=1.0.0_rc2
+pkgver=1.0.0
 pkgrel=0
 pkgdesc="Containerd Plugin for Kubernetes Container Runtime Interface"
 url="https://github.com/containerd/cri"
 arch="all"
 license="Apache-2.0"
 makedepends="go bash libseccomp-dev libapparmor-dev btrfs-progs-dev"
-source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver/_rc2/-rc.2}.tar.gz
+source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz
 	disable-race-testing-on-alpine.patch"
 builddir="$srcdir/src/github.com/containerd/cri"
 
@@ -15,7 +15,7 @@ export GOPATH="$srcdir"
 
 prepare() {
 	mkdir -p ${builddir%/*}
-	mv "$srcdir"/$pkgname-${pkgver/_rc2/-rc.2} "$builddir"/
+	mv "$srcdir"/$pkgname-${pkgver} "$builddir"/
 	default_prepare
 }
 
@@ -34,5 +34,5 @@ package() {
 	install -Dm755 "$builddir"/_output/ctr "$pkgdir"/usr/bin/ctr
 }
 
-sha512sums="d8f6ace815c60f5ae169fc56c4455beb4b4b7b5ea9d5831a01adf085b31ea621f38366eb03f24b63cf48277c7905fee4123b6ea52e7e227b7eb5bf0ecc24621e  cri-1.0.0_rc2.tar.gz
+sha512sums="8e4f2ce01fde28e5477eeb428db3fbffc4e33ad16110e089e3e9cc6b3a9becc5fac42fb067df189d8eee6e088e37bc2d5024d6525c238ee8a4b4c3c1343c307b  cri-1.0.0.tar.gz
 6f92d7b9e200afeba49ddc5f59e5acec531870e65b3e71bfe19fcc3964c9ec017eef6414956993e1814b428d62680f7f3a88b3acc730067d7e214c44c154cc1b  disable-race-testing-on-alpine.patch"
