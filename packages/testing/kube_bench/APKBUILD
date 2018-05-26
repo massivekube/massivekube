@@ -1,6 +1,6 @@
 # Maintainer: Dan Williams <dan@ma.ssive.co>
 pkgname=kube-bench
-pkgver=0.0.14
+pkgver=0.0.16
 pkgrel=0
 pkgdesc="Checks whether Kubernetes is deployed according to security best practices"
 url="https://github.com/aquasecurity/kube-bench"
@@ -34,4 +34,4 @@ package() {
 	install -Dm755 "$builddir"/kube-bench "$pkgdir"/usr/bin/kube-bench
 }
 
-sha512sums="d07cc3759e8d11908791df983434607a798b3f77e8520ca03445528fab19025aee2f80c6e2386a73090caf37e7f7fb1e9c47a6a585023c7b5f80b4dceeb12332  kube-bench-0.0.14.tar.gz"
+sha512sums="4cb0a1c5d6bd9991acbfe12d367db3d552e273cef472c11f81065be6fba93631d6c3859c247f6af7defc90e5aa716e1888a7501e5f5b024041ad81072a53c878  kube-bench-0.0.16.tar.gz"

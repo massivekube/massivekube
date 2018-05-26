@@ -1,6 +1,6 @@
 # Maintainer: Dan Williams <dan@ma.ssive.co>
 pkgname=kubernetes
-pkgver=1.10.1
+pkgver=1.10.2
 pkgrel=0
 pkgdesc="Production-Grade Container Scheduling and Management"
 url="https://github.com/kubernetes/kubernetes"
@@ -118,4 +118,4 @@ package() {
 	mkdir -p "$pkgdir"
 }
 
-sha512sums="be53fb6265fa5a96de671c3d84baddcbb2213428eae5ca39ac670201f0f4fe89195bdebc1a2d1abf2ad8ad100aca7ee642672c233bcacc427671e01dc95c9f1c  kubernetes-1.10.1.tar.gz"
+sha512sums="be907fed5d5ebc42097101160b9cac1924f738ba6856b821ea4e8582cb877f6ef919e98758f7d7924662633323215c9693173617df90d5940c987160e7397fc8  kubernetes-1.10.2.tar.gz"

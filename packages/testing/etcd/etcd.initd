@@ -3,6 +3,8 @@
 NAME=etcd
 DAEMON=/usr/bin/$NAME
 
+OPTS="--data-dir=${DATA_DIR}"
+
 depend() {
         need net
         after firewall
@@ -16,7 +18,8 @@ start() {
                         --stderr "/var/log/$NAME.log" \
                         --stdout "/var/log/$NAME.log" \
                         --user $USER \
-                        --exec $DAEMON
+                        --exec $DAEMON \
+                        -- $OPTS
         eend $?
 }
 

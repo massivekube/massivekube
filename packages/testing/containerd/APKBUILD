@@ -1,0 +1,40 @@
+# Maintainer: Dan Williams <dan@ma.ssive.co>
+pkgname=containerd
+pkgver=1.1.0
+pkgrel=0
+pkgdesc="An open and reliable container runtime"
+url="https://github.com/containerd/containerd"
+arch="all"
+license="Apache-2.0"
+makedepends="go bash libseccomp-dev libapparmor-dev btrfs-progs-dev"
+source="$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz
+	disable-race-testing-on-alpine.patch
+	fix-lchown-on-alpine.patch"
+builddir="$srcdir/src/github.com/containerd/containerd"
+
+export GOPATH="$srcdir"
+
+prepare() {
+	mkdir -p ${builddir%/*}
+	mv "$srcdir"/$pkgname-${pkgver} "$builddir"/
+	default_prepare
+}
+
+build() {
+	cd "$builddir"
+	make binaries
+}
+
+# check() {
+# 	cd "$builddir"
+# 	make test
+# }
+
+package() {
+	install -Dm755 "$builddir"/bin/containerd "$pkgdir"/usr/bin/containerd
+	install -Dm755 "$builddir"/bin/ctr "$pkgdir"/usr/bin/ctr
+}
+
+sha512sums="34e687c6ef270370160465ee9b8fe6b59780543907917b668db7867da67fd47c8465f57ba4268387f776d0f392f8dad533c206d6577bab36480aff4392775d42  containerd-1.1.0.tar.gz
+ea69d94390dd917c40c0878f015b2f3d1d59fb753706c6d5b3326a24abe65bdb62941e4e7cc79646f1eb0ba2801615a09b6dd156e8cd21ede4034180f3d8205e  disable-race-testing-on-alpine.patch
+ee30e4926ce5ab6c44d67a547c082474758e96fe4b5efb70d51c20cda78739d625c5d97c3c898a402e20a757145ed9659fe9ad9243d22077f283013cc96b5975  fix-lchown-on-alpine.patch"

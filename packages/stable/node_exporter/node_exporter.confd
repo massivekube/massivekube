@@ -1,12 +1,2 @@
-OPTS="--log.format=""logger:stdout?json=true"" \
-      --no-collector.hwmon \
-      --no-collector.arp \
-      --no-collector.netstat \
-      --no-collector.sockstat \
-      --no-collector.mdadm \
-      --no-collector.wifi \
-      --no-collector.zfs \
-      --no-collector.infiniband \
-      --collector.textfile.directory /var/lib/node_exporter/textfile_collector"
 
 USER="node_exporter"

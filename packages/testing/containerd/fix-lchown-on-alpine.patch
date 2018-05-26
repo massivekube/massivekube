@@ -1,0 +1,29 @@
+diff --git a/archive/tar.go b/archive/tar.go
+index f626bb4..8711605 100644
+--- a/archive/tar.go
++++ b/archive/tar.go
+@@ -24,7 +24,6 @@ import (
+ 	"io/ioutil"
+ 	"os"
+ 	"path/filepath"
+-	"runtime"
+ 	"strings"
+ 	"sync"
+ 	"syscall"
+@@ -388,11 +387,11 @@ func createTarFile(ctx context.Context, path, extractDir string, hdr *tar.Header
+ 	}
+
+ 	// Lchown is not supported on Windows.
+-	if runtime.GOOS != "windows" {
+-		if err := os.Lchown(path, hdr.Uid, hdr.Gid); err != nil {
+-			return err
+-		}
+-	}
++	// if runtime.GOOS != "windows" {
++	// 	if err := os.Lchown(path, hdr.Uid, hdr.Gid); err != nil {
++	// 		return err
++	// 	}
++	// }
+
+ 	for key, value := range hdr.PAXRecords {
+ 		if strings.HasPrefix(key, paxSchilyXattr) {
