@@ -1,3 +1,3 @@
 # Massivekube
 
-High security, reslient, batteries included kubernetes deployment. 
+High security, resilient, batteries included kubernetes deployment. 
