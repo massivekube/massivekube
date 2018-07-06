@@ -1,5 +1,0 @@
-#!/bin/sh
-
-mkdir -p /var/lib/kube-proxy
-
-exit 0

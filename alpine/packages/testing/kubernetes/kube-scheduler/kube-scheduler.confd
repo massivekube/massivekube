@@ -1,5 +1,0 @@
-
-LOG_LEVEL=1
-
-LEADER-ELECT=true \
-MASTER=http://127.0.0.1:8080

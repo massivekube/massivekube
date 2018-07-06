@@ -1,5 +1,0 @@
-#!/bin/sh
-
-rc-update add etcd
-
-exit 0

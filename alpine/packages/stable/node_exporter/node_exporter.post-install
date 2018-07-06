@@ -1,5 +1,0 @@
-#!/bin/sh
-
-rc-update add node_exporter
-
-exit 0

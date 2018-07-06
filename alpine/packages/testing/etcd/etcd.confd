@@ -1,3 +1,0 @@
-DATA_DIR=/var/lib/etcd
-
-USER="etcd"

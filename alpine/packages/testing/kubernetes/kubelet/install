@@ -1,5 +1,0 @@
-#!/bin/sh
-
-mkdir -p /var/lib/kubelet
-
-exit 0
